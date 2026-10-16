@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f6ee">
+  <meta name="description" content="Считай листочки, складывай и вычитай в пределах 10. За каждый верный ответ вылупляется динозаврик!">
+  <meta name="apple-mobile-web-app-title" content="Диносчёт">
+  <meta name="color-scheme" content="light">
+  <title>Диносчёт — считай и выращивай динозавров</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#question-title">К заданию</a>
+  <div class="site-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="Диносчёт"><img src="./icon.svg" alt="" width="38" height="38"><span>диносчёт<span class="brand-dot">.</span></span></div>
+      <div class="header-actions">
+        <button id="open-garden" class="garden-button" type="button"><span class="garden-icon" aria-hidden="true"></span><span>Мой парк</span><span id="total-count" class="count-badge">0</span></button>
+        <button id="open-settings" class="icon-button" type="button" aria-label="Настройки для взрослых"></button>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div class="eyebrow"><span aria-hidden="true">✦</span> МАЛЕНЬКИЕ ОТКРЫТИЯ КАЖДЫЙ ДЕНЬ</div>
+        <h1 id="page-title">Посчитаем <span>динозавриков?</span></h1>
+        <p>Реши задание — и помоги малышу вылупиться.</p>
+      </section>
+
+      <section id="play-screen" class="game-card" aria-label="Игра">
+        <div class="game-topline">
+          <span id="round-label">Задание 1 из 5</span>
+          <div id="round-progress" class="round-progress" aria-label="Вылупилось 0 из 5 динозавриков"></div>
+        </div>
+        <div class="game-layout">
+          <div class="learning-panel">
+            <div class="task-header">
+              <span id="task-label" class="task-label">СЧИТАЕМ</span>
+              <button id="read-question" type="button" class="read-button" aria-label="Прочитать задание вслух"><span class="sound-icon" aria-hidden="true"></span><span>Послушать</span></button>
+            </div>
+            <h2 id="question-title" tabindex="-1">Сколько здесь листочков?</h2>
+            <p id="task-story" class="task-story"></p>
+            <div id="objects" class="objects" aria-label="Листочки для счёта"></div>
+            <div id="formula" class="formula" aria-label="Пример"></div>
+            <p id="tap-hint" class="tap-hint">Касайся листочков и считай по порядку</p>
+            <div id="answer-area" class="answer-area">
+              <p class="answer-label" id="answer-label">Выбери ответ</p>
+              <div id="answers" class="answers" role="group" aria-labelledby="answer-label"></div>
+            </div>
+            <div id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></div>
+            <button id="help-button" type="button" class="text-button help-button">Давай посчитаем вместе</button>
+            <div id="solution" class="solution" hidden></div>
+            <button id="next-button" type="button" class="primary-button next-button" hidden></button>
+          </div>
+          <aside id="nest" class="nest" aria-label="Динозаврик в яйце">
+            <div class="nest-label" id="nest-label">КТО ЖЕ ТАМ ВНУТРИ?</div>
+            <div class="nest-art" id="nest-art"></div>
+            <h3 id="nest-title">Твой новый друг</h3>
+            <p id="nest-description">Он ждёт верного ответа</p>
+            <div class="nest-ground" aria-hidden="true"><span></span><span></span><span></span></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="complete-screen" class="complete-screen game-card" aria-labelledby="complete-title" hidden>
+        <div class="eyebrow">ПЯТЬ МАЛЕНЬКИХ ОТКРЫТИЙ</div>
+        <div id="complete-art" class="complete-art" aria-hidden="true"></div>
+        <h2 id="complete-title" tabindex="-1">У тебя получилось!</h2>
+        <p>Ты решил 5 заданий и помог 5 динозаврикам.</p>
+        <p class="break-note">Самое время отдохнуть. Малыши подождут тебя в парке.</p>
+        <div class="complete-actions"><button id="complete-garden" type="button" class="primary-button">К динозаврикам</button><button id="play-again" type="button" class="secondary-button">Ещё 5 заданий</button></div>
+      </section>
+
+      <footer class="page-footer"><span class="footer-sprout" aria-hidden="true">✿</span><span>Каждый ответ — маленькое открытие</span><button id="about-button" type="button">Для взрослых</button></footer>
+      <p id="storage-notice" class="storage-notice" role="status" hidden>Браузер не разрешает сохранение. Можно играть, но после закрытия страницы коллекция может потеряться.</p>
+    </main>
+  </div>
+
+  <dialog id="garden-dialog" aria-labelledby="garden-title">
+    <div class="dialog-heading"><div><div class="eyebrow">ТВОЯ КОЛЛЕКЦИЯ</div><h2 id="garden-title">Парк динозавриков</h2></div><button type="button" class="icon-button close-dialog" aria-label="Закрыть парк"></button></div>
+    <p id="garden-summary" class="dialog-description"></p>
+    <div id="garden-grid" class="garden-grid"></div>
+    <p class="collection-note">Каждый верный ответ добавляет одного малыша. Видов — шесть, а друзей может быть сколько угодно.</p>
+    <button type="button" class="primary-button close-dialog dialog-bottom">Вернуться к игре</button>
+  </dialog>
+
+  <dialog id="settings-dialog" aria-labelledby="settings-title">
+    <div class="dialog-heading"><div><div class="eyebrow">ДЛЯ ВЗРОСЛЫХ</div><h2 id="settings-title">Учимся в своём темпе</h2></div><button type="button" class="icon-button close-dialog" aria-label="Закрыть настройки"></button></div>
+    <form id="settings-form">
+      <label class="field-label" for="range-setting">В пределах какого числа?</label>
+      <select id="range-setting" name="max"><option value="5">До 5</option><option value="10">До 10</option></select>
+      <label class="field-label" for="mode-setting">Какие задания?</label>
+      <select id="mode-setting" name="mode"><option value="mixed">Всё вместе: счёт, + и −</option><option value="count">Считать предметы</option><option value="add">Складывать</option><option value="subtract">Вычитать</option></select>
+      <label class="checkbox-label"><input type="checkbox" id="sound-setting" name="sound"><span>Звук при верном ответе</span></label>
+      <p class="settings-note">При изменении сложности начнётся новая серия. Коллекция сохранится.</p>
+      <button type="submit" class="primary-button dialog-bottom">Сохранить и играть</button>
+    </form>
+    <details><summary>Как помогать ребёнку</summary><p>Попросите сначала посчитать предметы, затем выбрать число. В сложении объединяйте две группы. В вычитании считайте только оставшиеся листочки. Перечёркнутые уже убрали.</p><p>Если ответ не получается, нажимайте на листочки: номера помогают не считать один предмет дважды. Ошибка даёт возможность попробовать ещё раз. Таймера и штрафов нет.</p><p>Кнопка «Послушать» использует голос устройства, если он доступен. Игра работает и без звука.</p></details>
+    <details><summary>Что уже получилось</summary><div id="learning-stats" class="learning-stats"></div><p class="settings-note">«С первого раза» означает ответ без неверных попыток. Подсказки при этом могли использоваться. Эти числа не являются оценкой знаний.</p></details>
+    <p class="privacy-note">Коллекция и результаты сохраняются в этом браузере. При очистке данных браузера они исчезнут. Регистрация, реклама и аналитика в игре отсутствуют.</p>
+  </dialog>
+  <noscript><div class="noscript">Для игры нужен JavaScript. Включите его в настройках браузера и обновите страницу.</div></noscript>
+</body>
+</html>

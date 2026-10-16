@@ -1,0 +1,14 @@
+{
+  "name": "dinosaur-game",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Лёгкая игра на счёт, сложение и вычитание с динозаврами",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test tests/engine.test.mjs tests/site.test.mjs",
+    "test:browser": "node tests/browser.mjs"
+  },
+  "engines": { "node": ">=20" },
+  "devDependencies": { "playwright": "1.62.1" }
+}
